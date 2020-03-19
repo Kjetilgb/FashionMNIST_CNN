@@ -20,3 +20,7 @@ test_set = dset.FashionMNIST(root='./data', train=False,
 test_loader = torch.utils.data.DataLoader(test_set, batch_size=BATCH_SIZE, 
                                             shuffle=False, num_workers=2)
 
+print(train_set)
+
+# classes = trainset.classes
+## input shape (width=28, height=28, depth=1)
