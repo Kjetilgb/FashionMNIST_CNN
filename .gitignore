@@ -2,3 +2,5 @@
 /.vscode
 /venv
 /notes.txt
+/anaconda
+/.ipynb_checkpoints
