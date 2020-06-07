@@ -1,12 +1,30 @@
 import torch.nn as nn
-import torch.nn.functional as F
 
-class Model(nn.Module):
+## The Convolutional Neural Network model
+class CNN(nn.Module):
+    """ 
+    Convolutional Neural Network model for the 
+    fashion MNIST Dataset. """
     def __init__(self):
-        super(Model, self).__init__
-        self.conv1 = nn.Conv2d(1,20, 5)
-        self.conv2 = nn.Conv2d(20, 20, 5)
+        super(CNN, self).__init__()
+
+        self.layer1 = nn.Sequential(
+            nn.Conv2d(1, 16, kernel_size=5, padding=2),
+            nn.BatchNorm2d(16),
+            nn.ReLU(),
+            nn.MaxPool2d(2)
+        )
+        self.layer2 = nn.Sequential(
+            nn.Conv2d(16, 32, kernel_size=5, padding=2),
+            nn.BatchNorm2d(32),
+            nn.ReLU(),
+            nn.MaxPool2d(2)
+        )
+        self.fc = nn.Linear(7*7*32, 10)
 
     def forward(self, x):
-        x = F.relu(self.conv1(x))
-        return F.relu(self.conv2(x))
+        out = self.layer1(x)
+        out = self.layer2(out)
+        out = out.view(out.size(0), -1)
+        out = self.fc(out)
+        return out
